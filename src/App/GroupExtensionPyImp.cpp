@@ -35,7 +35,7 @@ using namespace App;
 // returns a string which represent the object e.g. when printed in python
 std::string GroupExtensionPy::representation() const
 {
-    return {"<group extension object>"};
+    return fmt::format("<Group {}>",getExtensionPtr()->getExtendedContainer()->getTypeId().getName());
 }
 
 PyObject* GroupExtensionPy::newObject(PyObject* args)
