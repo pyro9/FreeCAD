@@ -56,7 +56,7 @@ using namespace Gui;
 // returns a string which represent the object e.g. when printed in python
 std::string ViewProviderPy::representation() const
 {
-    return "<View provider object>";
+    return fmt::format("<{}>", getViewProviderPtr()->getTypeId().getName());
 }
 
 PyObject* ViewProviderPy::addProperty(PyObject* args, PyObject* kwd)
