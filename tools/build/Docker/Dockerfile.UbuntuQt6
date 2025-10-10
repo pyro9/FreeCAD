@@ -5,7 +5,7 @@ ENV TZ=Etc/UTC
 ENV UTC=true
 ENV ARC=false
 
-COPY ubuntu.sh /tmp
+COPY ubuntuQt6.sh /tmp
 
 RUN apt-get update && \
     apt-get upgrade --yes && \
