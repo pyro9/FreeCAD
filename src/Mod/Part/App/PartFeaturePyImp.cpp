@@ -41,7 +41,7 @@ std::string PartFeaturePy::representation() const
         PyObject* repstr = PyObject_Repr( Featclass );
         if (repstr) {
             Py_ssize_t len;
-            std::string ret =  fmt::format( "<{} ({})>\n", static_cast<std::string>(getTypeId()), PyUnicode_AsUTF8AndSize(repstr, &len));
+            std::string ret =  fmt::format( "<{} ({})>", static_cast<std::string>(getTypeId()), PyUnicode_AsUTF8AndSize(repstr, &len));
             Py_DECREF(repstr);
             return ret;
         }

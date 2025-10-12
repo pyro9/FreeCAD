@@ -38,7 +38,7 @@ std::string AttachExtensionPy::representation() const
         PyObject* repstr = PyObject_Repr( Featclass );
         if (repstr) {
             Py_ssize_t len;
-            std::string ret = fmt::format( "<Attachable {} ({})>\n", getAttachExtensionPtr()->getExtendedObject()->getTypeId().getName(), PyUnicode_AsUTF8AndSize(repstr, &len));
+            std::string ret = fmt::format( "<Attachable {} ({})>", getAttachExtensionPtr()->getExtendedObject()->getTypeId().getName(), PyUnicode_AsUTF8AndSize(repstr, &len));
             Py_DECREF(repstr);
             return ret;
         }
