@@ -41,10 +41,10 @@ std::string VectorPy::representation() const
     Py::Float y(ptr->y);
     Py::Float z(ptr->z);
     std::stringstream str;
-    str << "Vector (";
+    str << "< Vector (";
     str << static_cast<std::string>(x.repr()) << ", " << static_cast<std::string>(y.repr()) << ", "
         << static_cast<std::string>(z.repr());
-    str << ")";
+    str << ") >";
 
     return str.str();
 }
