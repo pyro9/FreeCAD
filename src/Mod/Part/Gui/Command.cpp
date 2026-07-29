@@ -1740,7 +1740,35 @@ CmdPartLoft::CmdPartLoft()
 void CmdPartLoft::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    Gui::Control().showDialog(new PartGui::TaskLoft());
+    std::vector<Gui::SelectionObject> Sel = getSelection().getSelectionEx(
+        nullptr,
+        App::DocumentObject::getClassTypeId(),
+        Gui::ResolveMode::FollowLink
+    );
+    if (Sel.size() >= 2) {
+        App::Document* activeDoc = App::GetApplication().getActiveDocument();
+        if(!activeDoc) {
+            return;
+        }
+        std::string docPython = App::DocumentT(activeDoc).getDocumentPython();
+        std::string profiles;
+
+        for (const auto& it : Sel) {
+            profiles.append(App::DocumentObjectT(it.getObject()).getObjectPython());
+            profiles.append(", ");
+        }
+
+        openCommand(QT_TRANSLATE_NOOP("Command", "Loft from selection"));
+        doCommand(Doc, "%s.addObject('Part::Loft','Loft')", docPython.c_str());
+        doCommand(Doc, "%s.ActiveObject.Sections=[ %s]", docPython.c_str(), profiles.c_str());
+        doCommand(Doc, "%s.ActiveObject.Solid=True",docPython.c_str());
+        doCommand(Doc, "%s.ActiveObject.Ruled=False", docPython.c_str());
+        doCommand(Doc, "%s.ActiveObject.Closed=False", docPython.c_str());
+        updateActive();
+        commitCommand();
+    } else {
+        Gui::Control().showDialog(new PartGui::TaskLoft());
+    }
 }
 
 bool CmdPartLoft::isActive()
